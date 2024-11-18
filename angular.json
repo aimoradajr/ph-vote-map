@@ -42,7 +42,7 @@
             ],
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "outputPath": "docs",
+            "outputPath": "docs/",
             "polyfills": ["zone.js"],
             "scripts": [],
             "tsConfig": "tsconfig.app.json"
