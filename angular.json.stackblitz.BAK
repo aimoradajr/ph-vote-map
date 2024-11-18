@@ -22,8 +22,7 @@
               "namedChunks": false,
               "optimization": true,
               "outputHashing": "all",
-              "sourceMap": false,
-              "baseHref": "/ph-vote-map/"
+              "sourceMap": false
             }
           },
           "options": {
@@ -42,7 +41,7 @@
             ],
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "outputPath": "docs",
+            "outputPath": "dist/demo",
             "polyfills": ["zone.js"],
             "scripts": [],
             "tsConfig": "tsconfig.app.json"
