@@ -1,0 +1,106 @@
+/* Add application styles & imports to this file! */
+.leaflet-shape-shadow {
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+path.leaflet-shape-striped-pattern {
+  fill: url(#striped-pattern); /* Reference the pattern */
+}
+
+.leaflet-shape-striped-border {
+  stroke-dasharray: 9; /* Size of dashes and gaps */
+  stroke-width: 2; /* Border thickness */
+}
+
+.leaflet-layer-shadow {
+  filter: drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.5));
+  /* filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5)); */
+}
+
+.leaflet-layer-shadow2 {
+  filter: drop-shadow(4px 4px 8px purple);
+  /* filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5)); */
+}
+
+.leaflet-tooltip.place-label {
+  font-weight: bold;
+  color: black;
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: center;
+  box-shadow: none; /* Remove any shadow */
+}
+
+.leaflet-tooltip.region-label {
+  color: rgb(66, 66, 66);
+  font-size: 0.6rem;
+}
+
+.leaflet-tooltip.province-label {
+  color: rgb(88, 88, 88);
+  font-size: 0.6rem;
+}
+
+.leaflet-tooltip.muncity-label {
+  color: rgb(88, 88, 88);
+  font-size: 0.5rem;
+}
+
+.leaflet-tooltip.mun-label {
+  color: rgb(88, 88, 88);
+  font-size: 0.5rem;
+}
+
+.leaflet-tooltip.city-label {
+  color: black;
+  font-size: 0.8rem;
+}
+
+.leaflet-tooltip.barangay-label {
+  color: rgb(88, 88, 88);
+  font-size: 0.5rem;
+}
+
+.leaflet-control-custom a.disabled {
+  pointer-events: none; /* Prevent clicks */
+  cursor: not-allowed; /* Show a "not-allowed" cursor */
+  opacity: 0.5; /* Dim the button to indicate it's disabled */
+}
+
+/* breadcrumb */
+.leaflet-control-breadcrumb a {
+  width: auto !important; /* Override the fixed width */
+  height: auto !important; /* Override the fixed height */
+  line-height: normal !important; /* Reset line height */
+  padding: 5px 10px; /* Add padding for clickable area */
+  display: inline-block; /* Ensure the items are inline and not constrained */
+}
+
+/* footer */
+.leaflet-control-breadcrumb {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  right: 0;
+  width: 100%; /* Full width across the map */
+  background-color: transparent;
+  padding: 10px; /* Padding for spacing */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow-x: auto; /* Scroll horizontally if needed */
+  white-space: nowrap; /* Prevent wrapping */
+  border: none !important;
+}
+
+/* footer */
+.tech-footer {
+  background-color: #f8f9fa;
+  padding: 10px;
+  text-align: center;
+  border-top: 1px solid #ddd;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
+}
