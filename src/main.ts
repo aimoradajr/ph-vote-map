@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { bootstrapApplication } from '@angular/platform-browser';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { latLng, tileLayer, GeoJSON } from 'leaflet';
-import { Map as LeafletMap } from 'leaflet';
-import { Layer } from 'leaflet';
-import { Feature } from 'geojson';
-import * as L from 'leaflet';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from "@angular/core";
+import { bootstrapApplication } from "@angular/platform-browser";
+import { HttpClientModule, HttpClient } from "@angular/common/http";
+import { latLng, tileLayer, GeoJSON } from "leaflet";
+import { Map as LeafletMap } from "leaflet";
+import { Layer } from "leaflet";
+import { Feature } from "geojson";
+import * as L from "leaflet";
+import { CommonModule } from "@angular/common";
 
 // Define color mapping for candidates and lead statuses
 // Config for different election races with predefined colors for each status
@@ -15,15 +15,15 @@ const electionConfig: any = {
     candidates: {
       candidatepresident1: {
         name: `Vonvon Mancos`,
-        colors: { leading: '#ffd1d1', win: 'red' },
+        colors: { leading: "#ffd1d1", win: "red" },
       },
       candidatepresident2: {
         name: `Deni Lobredo`,
-        colors: { leading: '#faffde', win: 'yellow' },
+        colors: { leading: "#faffde", win: "yellow" },
       },
       candidatepresident3: {
-        name: 'Sana Turete',
-        colors: { leading: '#d7ffd6', win: 'green' },
+        name: "Sana Turete",
+        colors: { leading: "#d7ffd6", win: "green" },
       },
     },
   },
@@ -32,21 +32,24 @@ const electionConfig: any = {
 
 // Function to get the specific color based on race, candidate, and status
 function getCandidateColor(
-  race: 'president' | 'vicePresident' | 'senators',
+  race: "president" | "vicePresident" | "senators",
   candidateKey: string,
-  status: 'leading' | 'win'
+  status: "leading" | "win"
 ) {
   const raceConfig = electionConfig[race];
   return raceConfig.candidates[candidateKey].colors[status];
 }
 
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   standalone: true,
   imports: [HttpClientModule, CommonModule],
   template: `
     <h4 style="text-align:center">
-      <span class="flag-icon flag-icon-ph" style="font-size: 24px; margin-right: 5px;"></span>
+      <span
+        class="flag-icon flag-icon-ph"
+        style="font-size: 24px; margin-right: 5px;"
+      ></span>
       Philippine Presidential Elections Interactive Map
       <span style="color:red">(Mock Random Data)</span>
     </h4>
@@ -54,14 +57,22 @@ function getCandidateColor(
     <!-- SVG pattern for striped fill with transparent gaps and white stripes -->
     <svg width="0" height="0" style="position: absolute;">
       <defs>
-        <pattern id="striped-pattern" patternUnits="userSpaceOnUse" width="8" height="8">
+        <pattern
+          id="striped-pattern"
+          patternUnits="userSpaceOnUse"
+          width="8"
+          height="8"
+        >
           <!-- White diagonal stripes, transparent background -->
-          <path d="M-2,2 l4,-4 M0,8 l8,-8 M6,10 l4,-4" stroke="white" stroke-width="2" />
+          <path
+            d="M-2,2 l4,-4 M0,8 l8,-8 M6,10 l4,-4"
+            stroke="white"
+            stroke-width="2"
+          />
         </pattern>
       </defs>
     </svg>
 
-    
     <!-- country:
     {{!currentCountryLayer? '': '*'}}
 
@@ -88,12 +99,18 @@ function getCandidateColor(
     <div id="map" style="height: 500px;"></div>
 
     <footer class="tech-footer">
-      <p>Technologies Used: Leaflet v1.9.4, Angular v18.1.0, Font Awesome v6.0.0, Github/faeldon/philippines-json-maps</p>
+      <p>
+        Technologies Used: Leaflet v1.9.4, Angular v18.1.0, Font Awesome v6.0.0,
+        Github/faeldon/philippines-json-maps
+      </p>
       <!-- flag-icon-css v3.5.0 -->
       <p style="font-size: 0.7rem; color: #aaa">
-        I built this project to explore interactive map visualizations, inspired by Google Maps' US Elections 2024. 
-        It focuses on Philippine elections and helped me dive deeper into Angular and Leaflet.
+        I built this project to explore interactive map visualizations, inspired
+        by Google Maps' US Elections 2024. It focuses on Philippine elections
+        and helped me dive deeper into Angular and Leaflet.
       </p>
+
+      <p style="font-size: 0.7rem; color: #aaa">Last Updated: 2024-Nov-18</p>
     </footer>
   `,
   styleUrls: [],
@@ -113,28 +130,28 @@ export class App implements OnInit {
       L.latLng(21.5, 127.0) // Northeast corner
     );
 
-    this.map = new LeafletMap('map', {
+    this.map = new LeafletMap("map", {
       center: latLng(12.8797, 121.774), // Center of the Philippines
       zoom: 6,
       maxZoom: 15, // Maximum zoom level to prevent zooming out too far
       minZoom: 5, // Minimum zoom level to ensure focus on the Philippines
       zoomControl: false,
       layers: [
-        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: 'OpenStreetMap',
+        tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: "OpenStreetMap",
         }),
       ],
       maxBounds: philippinesBounds, // Restrict to Philippine bounds
       maxBoundsViscosity: 1.0, // Restrict dragging outside bounds
     });
 
-    this.map.createPane('countryPane');
-    this.map.createPane('regionPane');
-    this.map.createPane('provincePane');
-    this.map.createPane('munCityPane');
-    this.map.createPane('barangayPane');
+    this.map.createPane("countryPane");
+    this.map.createPane("regionPane");
+    this.map.createPane("provincePane");
+    this.map.createPane("munCityPane");
+    this.map.createPane("barangayPane");
 
-    this.map.on('click', () => {
+    this.map.on("click", () => {
       // this.resetHighlight('country');
       // this.resetHighlight('region');
       // this.resetHighlight('province');
@@ -144,7 +161,7 @@ export class App implements OnInit {
 
     this.map.fitBounds(philippinesBounds); // Fit the initial view to the bounds
 
-    this.map.on('zoomend', () => {
+    this.map.on("zoomend", () => {
       if (!philippinesBounds.contains(this.map.getCenter())) {
         this.map.panInsideBounds(philippinesBounds);
       }
@@ -165,29 +182,29 @@ export class App implements OnInit {
     // Define the custom control
     const UpOneLevelControl = L.Control.extend({
       options: {
-        position: 'topleft', // Position of the control
+        position: "topleft", // Position of the control
       },
       onAdd: (map: L.Map) => {
         // Create a container for the control
         const container = L.DomUtil.create(
-          'div',
-          'leaflet-bar leaflet-control leaflet-control-custom'
+          "div",
+          "leaflet-bar leaflet-control leaflet-control-custom"
         );
 
         // Create a button element
-        const button = L.DomUtil.create('a', '', container);
+        const button = L.DomUtil.create("a", "", container);
         button.innerHTML = '<i class="fas fa-arrow-up"></i>';
-        button.href = '#';
-        button.title = 'Up One Level';
+        button.href = "#";
+        button.title = "Up One Level";
 
         // Set the initial disabled state based on the current layer
-        button.classList.add('disabled'); // Add a CSS class for
+        button.classList.add("disabled"); // Add a CSS class for
 
         // Prevent map interactions when clicking the button
         L.DomEvent.disableClickPropagation(container);
 
         // Define the action on button click
-        L.DomEvent.on(button, 'click', (e) => {
+        L.DomEvent.on(button, "click", (e) => {
           L.DomEvent.stopPropagation(e);
           L.DomEvent.preventDefault(e);
 
@@ -216,13 +233,13 @@ export class App implements OnInit {
     // Define the breadcrumb control
     const BreadcrumbControl = L.Control.extend({
       options: {
-        position: 'topright', // Adjust position as needed
+        position: "topright", // Adjust position as needed
       },
       onAdd: () => {
         // Create the breadcrumb container
         const container = L.DomUtil.create(
-          'div',
-          'leaflet-bar leaflet-control leaflet-control-breadcrumb'
+          "div",
+          "leaflet-bar leaflet-control leaflet-control-breadcrumb"
         );
 
         // Generate the breadcrumb HTML
@@ -230,13 +247,13 @@ export class App implements OnInit {
 
         // Add click handlers for breadcrumb links
         const links = container.querySelectorAll(
-          '.breadcrumb-item[data-index]'
+          ".breadcrumb-item[data-index]"
         );
         links.forEach((link) => {
-          link.addEventListener('click', (e) => {
+          link.addEventListener("click", (e) => {
             e.preventDefault();
             const index = parseInt(
-              (link as HTMLElement).getAttribute('data-index') || '0',
+              (link as HTMLElement).getAttribute("data-index") || "0",
               10
             );
             this.navigateToBreadcrumbLevel(index);
@@ -264,16 +281,16 @@ export class App implements OnInit {
     // Load the Philippines GeoJSON file with all regions
     this.http
       .get(
-        'https://raw.githubusercontent.com/faeldon/philippines-json-maps/refs/heads/master/2023/geojson/country/lowres/country.0.001.json'
+        "https://raw.githubusercontent.com/faeldon/philippines-json-maps/refs/heads/master/2023/geojson/country/lowres/country.0.001.json"
       )
       .subscribe((geoJsonData: any) => {
         // Clear existing province layers
         this.clearCountryLayer();
 
         const countryLayer = L.geoJSON(geoJsonData, {
-          pane: 'countryPane',
+          pane: "countryPane",
           style: {
-            color: 'white',
+            color: "white",
             weight: 2,
             // fillOpacity: 0.2,
           },
@@ -293,7 +310,7 @@ export class App implements OnInit {
                   }: ${candidate.votes} votes (${candidate.percentage}%)<br>
                 `
                 )
-                .join('')}
+                .join("")}
               <br/>
               ${voteData.reportingPercentage}% reporting
             `;
@@ -308,8 +325,8 @@ export class App implements OnInit {
               this.extractShortName(feature?.properties?.adm1_en),
               {
                 permanent: true, // Keep it visible without hover
-                direction: 'center', // Center the text within the shape
-                className: 'place-label region-label', // Custom class for styling
+                direction: "center", // Center the text within the shape
+                className: "place-label region-label", // Custom class for styling
               }
             );
 
@@ -331,15 +348,15 @@ export class App implements OnInit {
               });
             }
 
-            layer.on('click', () => {
+            layer.on("click", () => {
               this.loadRegion(feature);
-              this.highlightLayer(layer, 'region');
+              this.highlightLayer(layer, "region");
             });
           },
         }).addTo(this.map);
 
         // Apply shadow to the whole layer by targeting the pane
-        this.map.getPane('countryPane')?.classList.add('leaflet-layer-shadow');
+        this.map.getPane("countryPane")?.classList.add("leaflet-layer-shadow");
 
         // Center and zoom the map to fit the country's bounds
         const bounds = countryLayer.getBounds(); // Get the bounding box of the GeoJSON layer
@@ -358,9 +375,9 @@ export class App implements OnInit {
   enableUpButton(enable = true) {
     if (this.upButton) {
       if (enable) {
-        this.upButton.classList.remove('disabled');
+        this.upButton.classList.remove("disabled");
       } else {
-        this.upButton.classList.add('disabled');
+        this.upButton.classList.add("disabled");
       }
     }
   }
@@ -390,14 +407,14 @@ export class App implements OnInit {
 
     // If no acronym, generate a short name using the first letters of each word
     return fullRegionName
-      .split(' ')
+      .split(" ")
       .map((word) => word[0].toUpperCase()) // Take the first letter of each word
-      .join(''); // Combine letters
+      .join(""); // Combine letters
   }
 
   createStripedPattern(color: string): string {
-    const svgNS = 'http://www.w3.org/2000/svg';
-    const patternId = `striped-pattern-${color.replace('#', '')}`; // Unique ID based on color
+    const svgNS = "http://www.w3.org/2000/svg";
+    const patternId = `striped-pattern-${color.replace("#", "")}`; // Unique ID based on color
 
     // Check if the pattern already exists
     if (document.getElementById(patternId)) {
@@ -405,34 +422,34 @@ export class App implements OnInit {
     }
 
     // Create the pattern element
-    const pattern = document.createElementNS(svgNS, 'pattern');
-    pattern.setAttribute('id', patternId);
-    pattern.setAttribute('patternUnits', 'userSpaceOnUse');
-    pattern.setAttribute('width', '8');
-    pattern.setAttribute('height', '8');
+    const pattern = document.createElementNS(svgNS, "pattern");
+    pattern.setAttribute("id", patternId);
+    pattern.setAttribute("patternUnits", "userSpaceOnUse");
+    pattern.setAttribute("width", "8");
+    pattern.setAttribute("height", "8");
 
     // Create the path element for stripes with specified color
-    const path = document.createElementNS(svgNS, 'path');
-    path.setAttribute('d', 'M-2,2 l4,-4 M0,8 l8,-8 M6,10 l4,-4');
-    path.setAttribute('stroke', color); // Use the custom color here for the stripes
-    path.setAttribute('stroke-width', '2');
+    const path = document.createElementNS(svgNS, "path");
+    path.setAttribute("d", "M-2,2 l4,-4 M0,8 l8,-8 M6,10 l4,-4");
+    path.setAttribute("stroke", color); // Use the custom color here for the stripes
+    path.setAttribute("stroke-width", "2");
 
     // Append the path to the pattern
     pattern.appendChild(path);
 
     // Append the pattern to the SVG defs
     const defs =
-      document.querySelector('svg defs') ||
-      document.createElementNS(svgNS, 'defs');
+      document.querySelector("svg defs") ||
+      document.createElementNS(svgNS, "defs");
     defs.appendChild(pattern);
 
     // Ensure defs are in the SVG element in the DOM
-    let svg = document.querySelector('svg');
+    let svg = document.querySelector("svg");
     if (!svg) {
-      svg = document.createElementNS(svgNS, 'svg');
-      svg.setAttribute('width', '0');
-      svg.setAttribute('height', '0');
-      svg.style.position = 'absolute';
+      svg = document.createElementNS(svgNS, "svg");
+      svg.setAttribute("width", "0");
+      svg.setAttribute("height", "0");
+      svg.style.position = "absolute";
       svg.appendChild(defs);
       document.body.appendChild(svg);
     }
@@ -444,7 +461,7 @@ export class App implements OnInit {
     // Determine if results should be final based on the provided probability
     const isFinal = Math.random() < finalProbability;
 
-    const race = 'president';
+    const race = "president";
     const maxVotes = 10000; // Maximum possible votes per candidate
 
     const reportingPercentage = isFinal ? 100 : Math.floor(Math.random() * 101);
@@ -525,9 +542,9 @@ export class App implements OnInit {
 
       // Add provinces to the map
       const regionLayer = L.geoJSON(geoJsonData, {
-        pane: 'regionPane',
+        pane: "regionPane",
         style: {
-          color: 'white',
+          color: "white",
           weight: 2,
         },
         onEachFeature: (feature, layer) => {
@@ -548,7 +565,7 @@ export class App implements OnInit {
                 }: ${candidate.votes} votes (${candidate.percentage}%)<br>
               `
               )
-              .join('')}
+              .join("")}
             <br/>
             ${voteData.reportingPercentage}% reporting
           `;
@@ -577,19 +594,19 @@ export class App implements OnInit {
           // Bind the tooltip with the place name and set it to always display
           layer.bindTooltip(feature?.properties?.adm2_en, {
             permanent: true, // Keep it visible without hover
-            direction: 'center', // Center the text within the shape
-            className: 'place-label province-label', // Custom class for styling
+            direction: "center", // Center the text within the shape
+            className: "place-label province-label", // Custom class for styling
           });
 
-          layer.on('click', () => {
+          layer.on("click", () => {
             this.loadProvince(feature);
-            this.highlightLayer(layer, 'province');
+            this.highlightLayer(layer, "province");
           });
         },
       }).addTo(this.map);
 
       // Apply shadow to the whole layer by targeting the pane
-      this.map.getPane('regionPane')?.classList.add('leaflet-layer-shadow');
+      this.map.getPane("regionPane")?.classList.add("leaflet-layer-shadow");
 
       // Store the region and region layer for later reference
       this.currentRegionFeature = regionFeature;
@@ -629,9 +646,9 @@ export class App implements OnInit {
 
       // Add municipalities/cities to the map
       const provinceLayer = L.geoJSON(geoJsonData, {
-        pane: 'provincePane',
+        pane: "provincePane",
         style: {
-          color: 'white',
+          color: "white",
           weight: 2,
         },
         onEachFeature: (feature, layer) => {
@@ -654,7 +671,7 @@ export class App implements OnInit {
                 }: ${candidate.votes} votes (${candidate.percentage}%)<br>
               `
               )
-              .join('')}
+              .join("")}
             <br/>
             ${voteData.reportingPercentage}% reporting
           `;
@@ -682,28 +699,28 @@ export class App implements OnInit {
 
           const geoLevel = feature?.properties?.geo_level;
           const labelClass =
-            geoLevel === 'Mun'
-              ? 'mun-label'
-              : geoLevel === 'City'
-              ? 'city-label'
-              : '';
+            geoLevel === "Mun"
+              ? "mun-label"
+              : geoLevel === "City"
+              ? "city-label"
+              : "";
 
           // Bind the tooltip with the place name and set it to always display
           layer.bindTooltip(feature?.properties?.adm3_en, {
             permanent: true, // Keep it visible without hover
-            direction: 'center', // Center the text within the shape
+            direction: "center", // Center the text within the shape
             className: `place-label ${labelClass}`, // Custom class for styling
           });
 
-          layer.on('click', () => {
+          layer.on("click", () => {
             this.loadMunCity(feature);
-            this.highlightLayer(layer, 'muncity');
+            this.highlightLayer(layer, "muncity");
           });
         },
       }).addTo(this.map);
 
       // Apply shadow to the whole layer by targeting the pane
-      this.map.getPane('provincePane')?.classList.add('leaflet-layer-shadow');
+      this.map.getPane("provincePane")?.classList.add("leaflet-layer-shadow");
 
       // Store the province and province layer for later reference
       this.currentProvinceFeature = provinceFeature;
@@ -743,9 +760,9 @@ export class App implements OnInit {
 
       // Add barangays to the map
       const munCityLayer = L.geoJSON(geoJsonData, {
-        pane: 'munCityPane',
+        pane: "munCityPane",
         style: {
-          color: 'white',
+          color: "white",
           weight: 2,
         },
         onEachFeature: (feature, layer) => {
@@ -766,7 +783,7 @@ export class App implements OnInit {
                 }: ${candidate.votes} votes (${candidate.percentage}%)<br>
               `
               )
-              .join('')}
+              .join("")}
             <br/>
             ${voteData.reportingPercentage}% reporting
           `;
@@ -795,11 +812,11 @@ export class App implements OnInit {
           // Bind the tooltip with the place name and set it to always display
           layer.bindTooltip(feature?.properties?.adm4_en, {
             permanent: true, // Keep it visible without hover
-            direction: 'center', // Center the text within the shape
-            className: 'place-label barangay-label', // Custom class for styling
+            direction: "center", // Center the text within the shape
+            className: "place-label barangay-label", // Custom class for styling
           });
 
-          layer.on('click', () => {
+          layer.on("click", () => {
             this.loadBarangay(feature);
             // this.highlightLayer(layer, 'barangay');
           });
@@ -807,7 +824,7 @@ export class App implements OnInit {
       }).addTo(this.map);
 
       // Apply shadow to the whole layer by targeting the pane
-      this.map.getPane('munCityPane')?.classList.add('leaflet-layer-shadow');
+      this.map.getPane("munCityPane")?.classList.add("leaflet-layer-shadow");
 
       // Store the munCity and munCity layer for later reference
       this.currentMunCityFeature = munCityFeature;
@@ -849,9 +866,9 @@ export class App implements OnInit {
   highlightedLayer: L.Layer | undefined;
   highlightLayer(
     clickedLayer: L.Layer,
-    layerType: 'country' | 'region' | 'province' | 'muncity' | 'barangay'
+    layerType: "country" | "region" | "province" | "muncity" | "barangay"
   ) {
-    const dimColor = 'red';
+    const dimColor = "red";
     const dimOpacity = 0.3;
     const dimFillOpacity = 0.4;
 
@@ -895,30 +912,30 @@ export class App implements OnInit {
 
   // Function to reset the highlight of a specific layer type
   resetHighlight(
-    layerType: 'country' | 'region' | 'province' | 'muncity' | 'barangay'
+    layerType: "country" | "region" | "province" | "muncity" | "barangay"
   ) {
-    if (layerType === 'country' && this.currentCountryLayer) {
+    if (layerType === "country" && this.currentCountryLayer) {
       this.currentCountryLayer.eachLayer((layer: any) => {
         layer.setStyle({
           weight: 2,
           fillOpacity: 0.2,
         });
       });
-    } else if (layerType === 'region' && this.currentRegionLayer) {
+    } else if (layerType === "region" && this.currentRegionLayer) {
       this.currentRegionLayer.eachLayer((layer: any) => {
         layer.setStyle({
           weight: 2,
           fillOpacity: 0.2,
         });
       });
-    } else if (layerType === 'province' && this.currentProvinceLayer) {
+    } else if (layerType === "province" && this.currentProvinceLayer) {
       this.currentProvinceLayer.eachLayer((layer: any) => {
         layer.setStyle({
           weight: 2,
           fillOpacity: 0.2,
         });
       });
-    } else if (layerType === 'muncity' && this.currentMunCityLayer) {
+    } else if (layerType === "muncity" && this.currentMunCityLayer) {
       this.currentMunCityLayer.eachLayer((layer: any) => {
         layer.setStyle({
           weight: 2,
@@ -942,35 +959,35 @@ export class App implements OnInit {
 
   getBreadcrumbHTML(): string {
     const levels = [
-      { name: 'Philippines', feature: null }, // Root level
+      { name: "Philippines", feature: null }, // Root level
       {
-        name: this.currentRegionFeature?.properties?.['adm1_en'],
+        name: this.currentRegionFeature?.properties?.["adm1_en"],
         feature: this.currentRegionFeature,
       },
       {
-        name: this.currentProvinceFeature?.properties?.['adm2_en'],
+        name: this.currentProvinceFeature?.properties?.["adm2_en"],
         feature: this.currentProvinceFeature,
       },
       {
-        name: this.currentMunCityFeature?.properties?.['adm3_en'],
+        name: this.currentMunCityFeature?.properties?.["adm3_en"],
         feature: this.currentMunCityFeature,
       },
       {
-        name: this.currentBarangayFeature?.properties?.['adm4_en'],
+        name: this.currentBarangayFeature?.properties?.["adm4_en"],
         feature: this.currentBarangayFeature,
       },
     ];
 
     return levels
-      .filter((level) => level.feature || level.name === 'Philippines') // Always include 'Philippines'
+      .filter((level) => level.feature || level.name === "Philippines") // Always include 'Philippines'
       .map((level, index) => {
-        if (index < levels.length - 1 || level.name === 'Philippines') {
+        if (index < levels.length - 1 || level.name === "Philippines") {
           // Make "Philippines" and all other levels clickable
           return `<a href="#" class="breadcrumb-item" data-index="${index}">${level.name}</a>`;
         }
         return `<span class="breadcrumb-item">${level.name}</span>`;
       })
-      .join(' > ');
+      .join(" > ");
   }
 }
 
